@@ -35,6 +35,11 @@ request(dronesSettings, function (error, response, dronesString) {
 		request(droneSettings, function (error, response, droneString) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
+                        
+                request(dronespecs, function (error, response, Specstring) {
+			var droneSettings = new Settings("files?drone_id.is=" + Specstring.id + "?format=json");
+                    var drone = JSON.parse(Specstring);
+			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
 		});
 	});
 });
