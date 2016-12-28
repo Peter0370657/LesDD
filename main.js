@@ -1,4 +1,4 @@
-// >$ npm install request --save 
+//test
 var request = require("request"); 
 var dal = require('./storage.js');
 
@@ -36,9 +36,8 @@ var File = function (id, date_first_record, date_last_record, date_loaded, conte
     this.contents = contents;
     this.droneId = droneId;
 };
-
 var settings  = function (url){
-    this.url = beginlink+ url ;
+    this.url = beginlink + url ;
     this.method = "GET";
     this.qs = {format: 'json'};
     this.headers = {
@@ -46,13 +45,36 @@ var settings  = function (url){
     };
 };
 
+var Drone_Settings = new settings ("/drones?format=json");
 
-
-/*
 dal.ClearFile();
 dal.ClearDrone();
 dal.ClearContent();
-*/
 
 
-console.log("Hello World!"); 
+request(Drone_Settings, function (error, response, DronesString){
+    var drones = JSON.parse(DroneString);
+    console.log(drones);
+    drones.forEach(function (drone){
+        var file_de_setting = new settings("/drones/" + drone.id + "?format=json");
+        request(file_de_setting, function (error, response, DroneString){
+            var a = JSON.parse(DroneString);
+            dal.InsertDrone(
+                new Drone(
+                    a.id, 
+                    a.name, 
+                    a.mac
+                    a.location,
+                    a.last_packet_date, 
+                    a.files, 
+                    a.files_count
+                )
+            ); // sluit line 62 dal
+            
+            
+        }); //sluit line 60
+    });// sluit line 58 foreach
+}); // sluit line 55
+
+
+//console.log("Hello World!"); 
