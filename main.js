@@ -6,21 +6,21 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";   // moet erbij zodat het geen p
 
 
 
-var Drone = function (){
+var Drone = function (id, name, mac, location){
     this._id = id;
     this.name = name;
     this.mac = mac;
     this.location = location;
 };
-var Content = function (){
+var Content = function (id, mac_address, datetime, rssi, ref, url){
     this._id = id;
     this.mac_address = mac_address;
     this.datetime = datetime;
     this.rssi = rssi;
     this.ref = ref;
-    this.url = url
+    this.url = url;
 };
-var File = function (){
+var File = function (id, date_first_record, date_last_record, date_loaded, contents_count){
     this._id = id;
     this.date_first_record = date_first_record;
     this.date_last_record = date_last_record;
