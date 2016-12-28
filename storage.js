@@ -29,41 +29,36 @@ var dal = {
                 });
             });
         }, 
-        ClearDrone: function (call){
+        ClearFile: function (call){
             this.connect(null, function (db){
-                db.collection('drones').drop(function (err, result){
+                db.collection('files').drop(function (err, result){
                     db.close();
                 });
             });
         },
-        InsertDrone: function (drone, callback){
+        InsertFile: function (files, callback){
             this.connect(null, function(db){
-                db.collection('drones').insert(drone, function (err, result){
+                db.collection('files').insert(files, function (err, result){
                     db.close();
-                    console.log("drone inserted succesfully");
+                    console.log("files inserted succesfully");
                 });
             });
         }, 
-        ClearDrone: function (call){
+        ClearContent: function (call){
             this.connect(null, function (db){
-                db.collection('drones').drop(function (err, result){
+                db.collection('contents').drop(function (err, result){
                     db.close();
                 });
             });
         },
-        InsertDrone: function (drone, callback){
+        InsertContent: function (contents, callback){
             this.connect(null, function(db){
-                db.collection('drones').insert(drone, function (err, result){
+                db.collection('contents').insert(contents, function (err, result){
                     db.close();
-                    console.log("drone inserted succesfully");
+                    console.log("contents inserted succesfully");
                 });
             });
-        }, 
-        
-        
-        
-        
-        
+        } 
 };
 
 module.exports = dal;
