@@ -20,7 +20,45 @@ var dal = {
                     db.close();
                 });
             });
-        }
+        },
+        InsertDrone: function (drone, callback){
+            this.connect(null, function(db){
+                db.collection('drones').insert(drone, function (err, result){
+                    db.close();
+                    console.log("drone inserted succesfully");
+                });
+            });
+        }, 
+        ClearDrone: function (call){
+            this.connect(null, function (db){
+                db.collection('drones').drop(function (err, result){
+                    db.close();
+                });
+            });
+        },
+        InsertDrone: function (drone, callback){
+            this.connect(null, function(db){
+                db.collection('drones').insert(drone, function (err, result){
+                    db.close();
+                    console.log("drone inserted succesfully");
+                });
+            });
+        }, 
+        ClearDrone: function (call){
+            this.connect(null, function (db){
+                db.collection('drones').drop(function (err, result){
+                    db.close();
+                });
+            });
+        },
+        InsertDrone: function (drone, callback){
+            this.connect(null, function(db){
+                db.collection('drones').insert(drone, function (err, result){
+                    db.close();
+                    console.log("drone inserted succesfully");
+                });
+            });
+        }, 
         
         
         
