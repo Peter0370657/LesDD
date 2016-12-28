@@ -5,7 +5,6 @@ var url = 'mongodb://localhost:27017/prober';
 // mongo API : http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html
 
 var dal = {
-
 	connect: function (err, result) {
 		MongoClient.connect(url, function (error, db) {
 			if (error)
