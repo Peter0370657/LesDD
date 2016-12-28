@@ -4,7 +4,7 @@ var dal = require('./storage.js');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";   // moet erbij zodat het geen problemen vormt om een self-signed cert te negeren.
 
-
+var beginlink = "https://web-ims.thomasmore.be/datadistribution/API/2.0";
 
 var Drone = function (id, name, mac, location){
     this._id = id;
@@ -26,6 +26,15 @@ var File = function (id, date_first_record, date_last_record, date_loaded, conte
     this.date_last_record = date_last_record;
     this.date_loaded = date_loaded;
     this.contents_count = contents_count;
+};
+
+var settings  = function (url){
+    this.url = beginlink+ url ;
+    this.method = "GET";
+    this.qs = {format: 'json'};
+    this.headers = {
+        authorization: "Basic aW1zOno1MTJtVDRKeVgwUExXZw=="
+    };
 };
 
 
