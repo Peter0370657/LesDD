@@ -58,19 +58,19 @@ request(Drone_Settings, function (error, response, DronesString){
     drones.forEach(function (drone){
         var file_de_setting = new settings("/drones/" + drone.id + "?format=json");
         request(file_de_setting, function (error, response, DroneString){
-            var a = JSON.parse(DroneString);
+            var FileDetails = JSON.parse(DroneString);
             dal.InsertDrone(
                 new Drone(
-                    a.id, 
-                    a.name, 
-                    a.mac
-                    a.location,
-                    a.last_packet_date, 
-                    a.files, 
-                    a.files_count
+                    FileDetails.id, 
+                    FileDetails.name, 
+                    FileDetails.mac
+                    FileDetails.location,
+                    FileDetails.last_packet_date, 
+                    FileDetails.files, 
+                    FileDetails.files_count
                 )
-            ); // sluit line 62 dal
-            
+            ); // sluit line 62
+            var File_Settings = new settings("/files?drone_id.is=" + drone.id+ "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00"); // hiermee krijgen we hopelijk alleen de gegevens die verzameld werden vanaf 1 december 
             
         }); //sluit line 60
     });// sluit line 58 foreach
