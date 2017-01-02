@@ -6,10 +6,10 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";   // moet erbij zodat het geen p
 
 var beginlink = "https://web-ims.thomasmore.be/datadistribution/API/2.0";
 
-var Drone = function (id, name, mac, location, last_packet_date, files, files_count) {
+var Drone = function (id, name, mac_address, location, last_packet_date, files, files_count) {
     this._id = id;
     this.name = name;
-    this.mac = mac;
+    this.mac_address = mac_address;
     this.location = location;
     this.last_packet_date = last_packet_date;
     this.files = files;
