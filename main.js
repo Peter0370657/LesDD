@@ -58,16 +58,16 @@ request(Drone_Settings, function (error, response, DronesString){
     drones.forEach(function (drone){
         var file_de_setting = new settings("/drones/" + drone.id + "?format=json");
         request(file_de_setting, function (error, response, DroneString){
-            var FileDetails = JSON.parse(DroneString);
+            var DroneDetails = JSON.parse(DroneString);
             dal.InsertDrone(
                 new Drone(
-                    FileDetails.id, 
-                    FileDetails.name, 
-                    FileDetails.mac,                // is null in robomongo, zit ergens fout in.
-                    FileDetails.location,
-                    FileDetails.last_packet_date, 
-                    FileDetails.files, 
-                    FileDetails.files_count
+                    DroneDetails.id, 
+                    DroneDetails.name, 
+                    DroneDetails.mac,                // is null in robomongo, zit ergens fout in.
+                    DroneDetails.location,
+                    DroneDetails.last_packet_date, 
+                    DroneDetails.files, 
+                    DroneDetails.files_count
                 )
             ); // sluit line 62
             var File_Settings = new settings("/files?drone_id.is=" + drone.id+ "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00"); // hiermee krijgen we hopelijk alleen de gegevens die verzameld werden vanaf 1 december 
