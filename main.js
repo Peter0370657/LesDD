@@ -63,7 +63,7 @@ request(Drone_Settings, function (error, response, DronesString) {
                     new Drone(
                             DroneDetails.id,
                             DroneDetails.name,
-                            DroneDetails.mac, // is null in robomongo, zit ergens fout in. 
+                            DroneDetails.mac_address, // moet natuurlijk ook hier en niet alleen in prototypes aangepast worden
                             DroneDetails.location,
                             DroneDetails.last_packet_date,
                             DroneDetails.files,
