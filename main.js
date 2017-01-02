@@ -53,7 +53,7 @@ dal.ClearContent();
 
 
 request(Drone_Settings, function (error, response, DronesString){
-    var drones = JSON.parse(DroneString);
+    var drones = JSON.parse(DronesString);
     console.log(drones);
     drones.forEach(function (drone){
         var file_de_setting = new settings("/drones/" + drone.id + "?format=json");
@@ -63,7 +63,7 @@ request(Drone_Settings, function (error, response, DronesString){
                 new Drone(
                     FileDetails.id, 
                     FileDetails.name, 
-                    FileDetails.mac
+                    FileDetails.mac,
                     FileDetails.location,
                     FileDetails.last_packet_date, 
                     FileDetails.files, 
