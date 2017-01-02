@@ -56,8 +56,8 @@ request(Drone_Settings, function (error, response, DronesString){
     var drones = JSON.parse(DronesString);
     console.log(drones);
     drones.forEach(function (drone){
-        var file_de_setting = new settings("/drones/" + drone.id + "?format=json");
-        request(file_de_setting, function (error, response, DroneString){
+        var drone_setting = new settings("/drones/" + drone.id + "?format=json");
+        request(drone_setting, function (error, response, DroneString){
             var DroneDetails = JSON.parse(DroneString);
             dal.InsertDrone(
                 new Drone(
@@ -71,10 +71,74 @@ request(Drone_Settings, function (error, response, DronesString){
                 )
             ); // sluit line 62
             var File_Settings = new settings("/files?drone_id.is=" + drone.id+ "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00"); // hiermee krijgen we hopelijk alleen de gegevens die verzameld werden vanaf 1 december 
-            
-        }); //sluit line 60
-    });// sluit line 58 foreach
-}); // sluit line 55
+            request(File_Settings, function(err, response, filesString){
+                var files = JSON.parse(filesString);
+                files.forEach(function (file){
+                    var File_de_Settings = new settings("/files/" + file.id + "?format=json");
+                    request(File_de_Settings, function(err, response, fileDetailString){
+                        try{
+                       var fileDetail = JSON.parse(fileDetailString);
+
+                            dal.insertFile(
+                                new File(
+                                    fileDetail.id,
+                                    fileDetail.date_loaded,
+                                    fileDetail.date_first_record,
+                                    fileDetail.date_last_record,
+                                    fileDetail.url,
+                                    fileDetail.ref,
+                                    fileDetail.contents,
+                                    fileDetail.contents_count,
+                                    drone.id
+                                ));
+
+                            var contentsSettings = new Settings("/files/" + file.id + "/contents?format=json");
+                            request(contentsSettings, function (error, response, contentsString) {
+                                try {
+                                    var contents = JSON.parse(contentsString);
+                                    //console.log(contents);
+
+                                    contents.forEach(function (content) {
+                                        var contentDetailSetting = new Settings("/files/" + file.id + "/contents/" + content.id + "?format=json");
+                                        request(contentDetailSetting, function (error, response, contentDetailString) {
+                                            try {
+                                                var contentDetail = JSON.parse(contentDetailString);
+                                                console.log(contentDetail);
+                                                dal.insertContent(
+                                                    new Content(
+                                                        contentDetail.id,
+                                                        contentDetail.mac_address,
+                                                        contentDetail.datetime,
+                                                        contentDetail.rssi,
+                                                        contentDetail.url,
+                                                        contentDetail.ref,
+                                                        drone.id,
+                                                        file.id
+                                                    ));
+                                            } catch (e) {
+                                                console.log(e);
+                                            }
+
+                                        });
+                                    });
+                                }catch (e) {
+                                    console.log(e);
+                                }
+                            });
+
+                            //console.log(fileDetail);
+                            }catch (e){
+                                console.log(e);
+                            }
+                        });
+
+                    });
 
 
-//console.log("Hello World!"); 
+            });
+
+        });
+    });
+
+
+});
